@@ -47,7 +47,7 @@ const ProfilePage = () => {
         className="text-center max-w-2xl w-full mx-4"
       >
         <motion.p 
-          className="md:text-2xl text-xl font-semibold md:mb-4 mb-[2rem] md:mt-0 mt-[3rem] text-zinc-300"
+          className="md:text-2xl text-xl font-semibold md:mb-4 mb-[2rem] text-zinc-300"
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
