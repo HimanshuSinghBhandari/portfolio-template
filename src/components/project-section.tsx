@@ -1,6 +1,7 @@
 "use client"
 import { motion } from 'framer-motion';
 import { FaCog, FaClock, FaLightbulb } from 'react-icons/fa';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface Project {
@@ -35,7 +36,7 @@ const ProjectCard = ({ icon, name, image, link }: Project) => (
           whileHover={{ scale: 1.03 }}
           transition={{ duration: 0.2 }}
         >
-          <img src={image} alt={name} className="w-full h-64 object-cover" />
+          <Image src={image} alt={name} className="w-full h-64 object-cover" width={600} height={300} />
         </motion.div>
       </div>
     </motion.div>

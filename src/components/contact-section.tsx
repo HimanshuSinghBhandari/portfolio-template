@@ -29,7 +29,7 @@ const ContactSection = () => {
       >
         
         <p className="text-zinc-300 mb-6">
-          Feel free to reach out if you'd like to collaborate on a project or just want to connect!
+       Feel free to reach out if you&apos;d like to collaborate on a project or just want to connect!
         </p>
 
         <motion.a

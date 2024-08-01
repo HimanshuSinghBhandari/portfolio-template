@@ -48,9 +48,9 @@ const AboutSection = () => {
         About Me
       </motion.h2>
       <div className="text-zinc-300 mb-12">
-        <p className="mb-4">
-          I'm HImanshu Singh, a Full stack developer based in Dehradun India. With a passion for creating visually stunning and user-friendly websites, I strive to exceed client expectations and push the boundaries of what's possible.
-        </p>
+      <p className="mb-4">
+       I&apos;m Himanshu Singh, a Full stack developer based in Dehradun India. With a passion for creating visually stunning and user-friendly websites, I strive to exceed client expectations and push the boundaries of what&apos;s possible.
+       </p>
       </div>
       {showTimeline && (
         <div className="relative">
