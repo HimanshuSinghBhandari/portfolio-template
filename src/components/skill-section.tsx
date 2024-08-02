@@ -1,10 +1,8 @@
 "use client"
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaCode, FaPalette, FaMobileAlt, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiFirebase, SiExpress, SiMongodb, SiFramer } from 'react-icons/si';
-import Link from 'next/link';
-
-// ... (previous interfaces and components remain the same)
 
 interface Skill {
   name: string;
@@ -27,11 +25,16 @@ const skills: Skill[] = [
   { name: 'Framer Motion', icon: <SiFramer /> },
 ];
 
-const SkillTag = ({ name, icon }: Skill) => (
+const SkillTag = ({ name, icon, isSelected, onClick }: Skill & { isSelected: boolean; onClick: () => void }) => (
   <motion.div
-    className="bg-zinc-700 text-zinc-200 px-3 py-2 rounded-full flex items-center m-1"
-    whileHover={{ scale: 1.05, backgroundColor: "#52525b" }}
+    className={`bg-zinc-700 text-zinc-200 px-3 py-2 rounded-full flex items-center m-1 cursor-pointer`}
+    whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
+    animate={{
+      backgroundColor: isSelected ? "#3f3f46" : "#3f3f3f",
+      transition: { duration: 0.3 }
+    }}
+    onClick={onClick}
   >
     <span className="mr-2">{icon}</span>
     {name}
@@ -39,6 +42,23 @@ const SkillTag = ({ name, icon }: Skill) => (
 );
 
 const SkillsSection = () => {
+  const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
+  const [isShuffling, setIsShuffling] = useState(false);
+
+  const handleSkillClick = (index: number) => {
+    setSelectedSkills(prev => 
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
+
+    if (selectedSkills.length === 1) {
+      setIsShuffling(true);
+      setTimeout(() => {
+        setIsShuffling(false);
+        setSelectedSkills([]);
+      }, 1500);
+    }
+  };
+
   return (
     <motion.div
       className="mt-[8rem] max-w-4xl w-full mx-auto px-4"
@@ -46,14 +66,14 @@ const SkillsSection = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
     >
-      <motion.h2 
+      <motion.h2
         className="text-4xl font-bold mb-8 text-zinc-200 text-center"
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
         Skills
       </motion.h2>
-      <motion.div 
+      <motion.div
         className="flex flex-wrap justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -63,10 +83,22 @@ const SkillsSection = () => {
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            animate={isShuffling ? {
+              x: Math.random() * 100 - 50,
+              y: Math.random() * 100 - 50,
+              transition: { duration: 0.5 }
+            } : { 
+              opacity: 1, 
+              y: 0, 
+              x: 0,
+              transition: { delay: index * 0.1, duration: 0.5 }
+            }}
           >
-            <SkillTag {...skill} />
+            <SkillTag 
+              {...skill} 
+              isSelected={selectedSkills.includes(index)}
+              onClick={() => handleSkillClick(index)}
+            />
           </motion.div>
         ))}
       </motion.div>
@@ -74,5 +106,4 @@ const SkillsSection = () => {
   );
 };
 
- 
 export default SkillsSection;
