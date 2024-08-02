@@ -1,29 +1,13 @@
 "use client";
-import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-
-const timelineVariants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: i * 0.3,
-      duration: 0.5,
-    },
-  }),
-};
+import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef } from "react";
 
 const AboutSection = () => {
-  const [showTimeline, setShowTimeline] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTimeline(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
 
   const timelineItems = [
     { year: "2010", text: "Started high school", side: "left" },
@@ -33,9 +17,13 @@ const AboutSection = () => {
     { year: "2024", text: "Graduated college with distinction", side: "left" },
   ];
 
+  // Calculate the length of the timeline
+  const maxIndex = timelineItems.length - 1;
+
   return (
     <motion.div
-      className="md:mt-16 max-w-3xl w-full mx-auto px-4"
+      ref={containerRef}
+      className="md:mt-16 max-w-3xl w-full mx-auto px-4 relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
@@ -48,28 +36,41 @@ const AboutSection = () => {
         About Me
       </motion.h2>
       <div className="text-zinc-300 mb-12">
-      <p className="mb-4">
-       I&apos;m Himanshu Singh, a Full stack developer based in Dehradun India. With a passion for creating visually stunning and user-friendly websites, I strive to exceed client expectations and push the boundaries of what&apos;s possible.
-       </p>
+        <p className="mb-4">
+          I&apos;m Himanshu Singh, a Full stack developer based in Dehradun India. With a passion for creating visually stunning and user-friendly websites, I strive to exceed client expectations and push the boundaries of what&apos;s possible.
+        </p>
       </div>
-      {showTimeline && (
-        <div className="relative">
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-zinc-600" />
-          {timelineItems.map((item, index) => (
+      <motion.div 
+        className="absolute left-1/2 transform -translate-x-1/2 w-0.5 bg-zinc-600"
+        style={{ 
+          scaleY: scrollYProgress,
+          height: `${(maxIndex + 1) * 125}px` // Adjust height based on the number of items
+        }}
+      />
+      <div className="relative">
+        {timelineItems.map((item, index) => {
+          const itemRef = useRef(null);
+          const { scrollYProgress: itemProgress } = useScroll({
+            target: itemRef,
+            offset: ["start end", "center center"]
+          });
+          const opacity = useTransform(itemProgress, [0, 1], [0.3, 1]);
+          const y = useTransform(itemProgress, [0, 1], [50, 0]);
+
+          return (
             <motion.div
               key={index}
+              ref={itemRef}
               className={`flex items-center mb-8 ${
                 item.side === "left" ? "justify-end" : "justify-start"
               }`}
-              custom={index}
-              initial="hidden"
-              animate="visible"
-              variants={timelineVariants}
+              style={{ opacity }}
             >
               <motion.div
                 className={`w-5/12 p-4 rounded-lg bg-zinc-800 shadow-lg ${
                   item.side === "left" ? "mr-8 text-right" : "ml-8"
                 }`}
+                style={{ y }}
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
@@ -77,9 +78,9 @@ const AboutSection = () => {
                 <p className="text-zinc-300">{item.text}</p>
               </motion.div>
             </motion.div>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
     </motion.div>
   );
 };

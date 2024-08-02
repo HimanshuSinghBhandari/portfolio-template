@@ -37,16 +37,16 @@ const ExperienceItem = ({ title, company, duration, description, index }: Experi
   return (
     <motion.div
       ref={itemRef}
-      className={`mb-16 flex flex-col md:flex-row ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'} items-center`}
+      className="mb-16 flex flex-col items-center"
       style={{ opacity }}
     >
       <motion.div 
-        className="bg-zinc-800 rounded-lg p-6 shadow-lg max-w-md"
+        className="bg-zinc-800 rounded-lg p-6 shadow-lg max-w-md w-full"
         style={{ y }}
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <motion.h3 
+        <motion.h3
           className="text-2xl font-bold text-zinc-200"
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -55,7 +55,7 @@ const ExperienceItem = ({ title, company, duration, description, index }: Experi
           {title}
         </motion.h3>
         <p className="text-zinc-400 mt-1">{company} | {duration}</p>
-        <motion.p 
+        <motion.p
           className="text-zinc-300 mt-2"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -83,18 +83,18 @@ const WorkExperience = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
     >
-      <motion.h2 
+      <motion.h2
         className="text-4xl text-center font-bold mb-16 text-zinc-200"
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
         Work Experience
       </motion.h2>
-      <motion.div 
-        className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-zinc-600"
+      <motion.div
+        className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-zinc-600 hidden md:block"
         style={{ scaleY: scrollYProgress }}
       />
-      <div>
+      <div className="relative">
         {experiences.map((experience, index) => (
           <ExperienceItem key={index} {...experience} index={index} />
         ))}
