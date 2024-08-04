@@ -63,11 +63,9 @@ const ProfilePage = () => {
         />
         
         <motion.h1 
-          className="md:text-3xl text-2xl font-bold md:mb-2 mb-[2rem] text-zinc-300"
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="md:text-3xl text-2xl  text-center font-bold md:mb-2 mb-[2rem] text-zinc-300"
         >
-          Himanshu Singh
+            Hi, I&apos;m Himanshu 👋
         </motion.h1>
         <p className="text-xl text-zinc-300 mb-4">Full Stack developer</p>
         
