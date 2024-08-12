@@ -13,9 +13,9 @@ const ContactSection = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
     >
-     <FaEnvelope className="text-5xl text-zinc-300 mx-auto mb-6" />
+      <FaEnvelope className="text-5xl text-gray-500 dark:text-zinc-300 mx-auto mb-6" />
       <motion.h2 
-        className="text-4xl font-bold mb-8 text-zinc-200"
+        className="text-4xl font-bold mb-8 text-gray-800 dark:text-zinc-200"
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
@@ -27,21 +27,20 @@ const ContactSection = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.7 }}
       >
-        
-        <p className="text-zinc-300 mb-6">
-       Feel free to reach out if you&apos;d like to collaborate on a project or just want to connect!
+        <p className="text-gray-700 dark:text-zinc-300 mb-6">
+          Feel free to reach out if you&apos;d like to collaborate on a project or just want to connect!
         </p>
 
         <motion.a
           href={`mailto:${email}`}
-          className="inline-block bg-zinc-700 text-zinc-200 px-6 py-3 rounded-full text-lg font-semibold"
-          whileHover={{ scale: 1.05, backgroundColor: "#52525b" }}
+          className="inline-block bg-gray-800 dark:bg-zinc-700 text-white dark:text-zinc-200 px-6 py-3 rounded-full text-lg font-semibold"
+          whileHover={{ scale: 1.05, backgroundColor: "#4a5568" }}
           whileTap={{ scale: 0.95 }}
         >
           Send Email
         </motion.a>
 
-        <p className="mt-8 text-zinc-400">
+        <p className="mt-8 text-gray-500 dark:text-zinc-400 mb-4">
           ©2024 Your Name. Inspired by Ultra by @justinmfarrugia
         </p>
       </motion.div>

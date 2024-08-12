@@ -4,6 +4,7 @@ import { FaCog, FaClock, FaLightbulb, FaMagic, FaGlobe, FaGithub } from 'react-i
 import Image from 'next/image';
 import { useRef } from 'react';
 import Link from 'next/link';
+import ThemeToggle from './theme-toggle';
 
 interface Project {
   icon: React.ReactNode;
@@ -60,7 +61,7 @@ const projects: Project[] = [
 
 const ProjectCard = ({ icon, name, description, image, link, tags, websiteLink, sourceLink }: Project) => (
   <motion.div
-    className="bg-zinc-800 border border-zinc-600 rounded-lg overflow-hidden shadow-lg w-full sm:w-[calc(50%-0.5rem)] mb-8"
+    className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 rounded-lg overflow-hidden shadow-lg w-full sm:w-[calc(50%-0.5rem)] mb-8"
     whileHover={{ scale: 1.02, y: -5 }}
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -68,8 +69,8 @@ const ProjectCard = ({ icon, name, description, image, link, tags, websiteLink, 
   >
     <Link href={link}>
       <div className="p-4 flex items-center justify-between">
-        <h3 className="text-xl font-semibold text-zinc-300">{name}</h3>
-        <div className="text-xl text-zinc-300">{icon}</div>
+        <h3 className="text-xl font-semibold text-gray-800 dark:text-zinc-300">{name}</h3>
+        <div className="text-xl text-gray-600 dark:text-zinc-300">{icon}</div>
       </div>
       <div className="px-4 pb-4">
         <motion.div
@@ -79,13 +80,13 @@ const ProjectCard = ({ icon, name, description, image, link, tags, websiteLink, 
         >
           <Image src={image} alt={name} className="w-full h-40 object-cover" width={600} height={300} />
         </motion.div>
-        <p className="mt-3 text-sm text-zinc-400">{description}</p>
+        <p className="mt-3 text-sm text-gray-600 dark:text-zinc-400">{description}</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {tags.map((tag, index) => (
             <motion.span
               key={index}
-              className="bg-zinc-900 text-zinc-300 px-2 py-1 rounded-xl text-xs"
-              whileHover={{ scale: 1.1, backgroundColor: "#3f3f46" }}
+              className="bg-gray-100 dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 px-2 py-1 rounded-xl text-xs"
+              whileHover={{ scale: 1.1, backgroundColor: "#e5e7eb" }}
               transition={{ duration: 0.2 }}
             >
               {tag}
@@ -96,8 +97,8 @@ const ProjectCard = ({ icon, name, description, image, link, tags, websiteLink, 
           {websiteLink && (
             <motion.a
               href={websiteLink}
-              className="bg-zinc-700 text-zinc-300 px-3 py-1 rounded-lg text-sm flex items-center gap-1"
-              whileHover={{ scale: 1.05, backgroundColor: "#52525b" }}
+              className="bg-gray-200 dark:bg-zinc-700 text-gray-700 dark:text-zinc-300 px-3 py-1 rounded-lg text-sm flex items-center gap-1"
+              whileHover={{ scale: 1.05, backgroundColor: "#d1d5db" }}
               whileTap={{ scale: 0.95 }}
             >
               <FaGlobe /> Website
@@ -106,8 +107,8 @@ const ProjectCard = ({ icon, name, description, image, link, tags, websiteLink, 
           {sourceLink && (
             <motion.a
               href={sourceLink}
-              className="bg-zinc-700 text-zinc-300 px-3 py-1 rounded-lg text-sm flex items-center gap-1"
-              whileHover={{ scale: 1.05, backgroundColor: "#52525b" }}
+              className="bg-gray-200 dark:bg-zinc-700 text-gray-700 dark:text-zinc-300 px-3 py-1 rounded-lg text-sm flex items-center gap-1"
+              whileHover={{ scale: 1.05, backgroundColor: "#d1d5db" }}
               whileTap={{ scale: 0.95 }}
             >
               <FaGithub /> Source
@@ -137,16 +138,17 @@ const ProjectSection = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
     >
-      <h2 className="text-2xl font-bold text-center text-zinc-300">My Projects</h2>
+      <ThemeToggle />
+      <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-zinc-300">My Projects</h2>
       <motion.div
         className="relative"
         style={{ opacity, y }}
       >
-        <p className="text-4xl text-zinc-200 font-semibold mb-2 text-center">
+        <p className="text-4xl text-gray-900 dark:text-zinc-200 font-semibold mb-2 text-center">
           Check out my <span className="relative">
             latest work
             <motion.div 
-              className="absolute bottom-0 left-0 h-0.5 bg-zinc-200"
+              className="absolute bottom-0 left-0 h-0.5 bg-gray-900 dark:bg-zinc-200"
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -162,4 +164,5 @@ const ProjectSection = () => {
     </motion.div>
   );
 };
+
 export default ProjectSection;

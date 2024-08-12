@@ -1,8 +1,9 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaCode, FaPalette, FaMobileAlt, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiFirebase, SiExpress, SiMongodb, SiFramer } from 'react-icons/si';
+import { useTheme } from 'next-themes';
 
 interface Skill {
   name: string;
@@ -25,25 +26,44 @@ const skills: Skill[] = [
   { name: 'Framer Motion', icon: <SiFramer /> },
 ];
 
-const SkillTag = ({ name, icon, isSelected, onClick }: Skill & { isSelected: boolean; onClick: () => void }) => (
-  <motion.div
-    className={`bg-zinc-700 text-zinc-200 px-3 py-2 rounded-full flex items-center m-1 cursor-pointer`}
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    animate={{
-      backgroundColor: isSelected ? "#3f3f46" : "#3f3f3f",
-      transition: { duration: 0.3 }
-    }}
-    onClick={onClick}
-  >
-    <span className="mr-2">{icon}</span>
-    {name}
-  </motion.div>
-);
+const SkillTag = ({ name, icon, isSelected, onClick }: Skill & { isSelected: boolean; onClick: () => void }) => {
+  const { theme } = useTheme();
+  
+  const backgroundColor = theme === 'light' 
+    ? (isSelected ? "#E5E7EB" : "#E5E7EB") // gray-200
+    : (isSelected ? "#3f3f46" : "#3f3f3f"); // zinc-700 or a similar shade
+
+  return (
+    <motion.div
+      className={`dark:bg-zinc-700 bg-gray-200 dark:text-zinc-200 text-gray-600 px-3 py-2 rounded-full flex items-center m-1 cursor-pointer`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      animate={{
+        backgroundColor,
+        transition: { duration: 0.3 }
+      }}
+      onClick={onClick}
+    >
+      <span className="mr-2">{icon}</span>
+      {name}
+    </motion.div>
+  );
+};
+
 
 const SkillsSection = () => {
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
   const [isShuffling, setIsShuffling] = useState(false);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const handleSkillClick = (index: number) => {
     setSelectedSkills(prev => 
@@ -67,7 +87,7 @@ const SkillsSection = () => {
       transition={{ delay: 0.5 }}
     >
       <motion.h2
-        className="text-4xl font-bold mb-8 text-zinc-200 text-center"
+        className="text-4xl font-bold mb-8 dark:text-zinc-200 text-gray-700 text-center"
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300 }}
       >

@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+      @apply transition-colors duration-300 ease-in-out;
+    }
+  }
+
+  html {
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+  
+  html.dark {
+    background-color: #1a202c; /* Adjust this to match your dark mode background color */
+    color: #f7fafc; /* Adjust this to match your dark mode text color */
+  }
+  
+  html:not(.dark) {
+    background-color: #ffffff; /* Adjust this to match your light mode background color */
+    color: #1a202c; /* Adjust this to match your light mode text color */
+  }
